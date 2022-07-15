@@ -14,6 +14,10 @@
   padding: 0 1.25rem;
 }
 
+.title {
+  text-align: center;
+}
+
 .form {
   width: min(100%, 600px);
   display: flex;

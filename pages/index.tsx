@@ -5,7 +5,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1>Clube de vantagens Staging</h1>
+        <h1 className={styles.title}>Clube de vantagens Staging</h1>
         <h2>Login</h2>
         <form className={styles.form}>
           <div className={styles.inputGroup}>
