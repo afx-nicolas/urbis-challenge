@@ -1,21 +1,61 @@
 import type { NextPage } from 'next';
+import React, { useState } from 'react';
+
+import useCredentials from '../hooks/useCredentials';
+
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isValidCredentials, setIsValidCredentials] = useState(true);
+  const { credentials, dispatch } = useCredentials();
+
+  function handleEmailInput(e: React.ChangeEvent<HTMLInputElement>) {
+    dispatch({ type: 'updateEmail', value: e.target.value });
+    setIsEmailValid(true);
+  }
+
+  function handlePasswordInput(e: React.ChangeEvent<HTMLInputElement>) {
+    dispatch({ type: 'updateEmail', value: e.target.value });
+    setIsValidCredentials(true);
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const { email } = credentials;
+
+    setIsEmailValid(
+      !!/^[A-z0-9.\-_]+@[A-z0-9.\-_]+\.[A-z]{2,4}(\.[A-z]{2,4})?$/.exec(email)
+    );
+  }
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>Clube de vantagens Staging</h1>
         <h2>Login</h2>
-        <form className={styles.form}>
+        {isValidCredentials ? null : (
+          <div className={styles.invalidCredentials}>
+            <span>E-mail ou senha incorretos</span>
+          </div>
+        )}
+        <form className={styles.form} onSubmit={handleSubmit} noValidate>
           <div className={styles.inputGroup}>
             <label htmlFor="email">E-mail</label>
             <input
-              className={styles.input}
+              className={
+                isEmailValid
+                  ? styles.input
+                  : [styles.input, styles.invalid].join(' ')
+              }
               type="email"
               name="email"
-              id="email"
+              value={credentials.email}
+              onChange={handleEmailInput}
             />
+            {isEmailValid || (
+              <small className={styles.alert}>Digite um e-mail válido</small>
+            )}
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="password">Senha</label>
@@ -23,7 +63,8 @@ const Home: NextPage = () => {
               className={styles.input}
               type="password"
               name="password"
-              id="password"
+              value={credentials.password}
+              onChange={handlePasswordInput}
             />
           </div>
           <button className={styles.submitButton} type="submit">
