@@ -18,6 +18,14 @@
   text-align: center;
 }
 
+.invalidCredentials {
+  background-color: #ff000008;
+  border: 1px solid red;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+}
+
 .form {
   width: min(100%, 600px);
   display: flex;
@@ -40,9 +48,22 @@
   transition-duration: 0.3s;
 }
 
+.input.invalid {
+  border-color: #f04952;
+}
+
 .input:focus {
   border-color: var(--blue);
   box-shadow: 0 0 10px -5px var(--blue);
+}
+
+.input.invalid:focus {
+  border-color: #f04952;
+  box-shadow: 0 0 10px -5px #f04952;
+}
+
+.alert {
+  color: #f04952;
 }
 
 .submitButton {
