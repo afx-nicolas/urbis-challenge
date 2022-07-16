@@ -1,25 +1,28 @@
+import { useState } from 'react';
 import { NextPageContext } from 'next';
 import { destroyCookie, parseCookies } from 'nookies';
 
 import { api } from '../services/api';
 import { Benefit } from '../types';
+import { UserProvider } from '../contexts/UserContext';
 
 import Card from '../components/Card';
 import Header from '../components/Header';
 import styles from '../styles/Beneficios.module.css';
+import Modal from '../components/Modal';
 
 interface BeneficiosProps {
-  user: {
-    name: string;
-    email: string;
-  };
   benefits: Benefit[];
 }
 
-export default function Beneficios({ user, benefits }: BeneficiosProps) {
+export default function Beneficios({ benefits }: BeneficiosProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => setIsModalOpen(true);
+
   return (
-    <>
-      <Header name={user.name} email={user.email} />
+    <UserProvider>
+      <Header />
       <main className={styles.main}>
         <div className={styles.container}>
           {benefits.map((benefit) => (
@@ -33,11 +36,13 @@ export default function Beneficios({ user, benefits }: BeneficiosProps) {
               rules={benefit.rules}
               isOnline={benefit.isOnline}
               url={benefit.url}
+              handleModalOpen={handleModalOpen}
             />
           ))}
         </div>
       </main>
-    </>
+      {isModalOpen && <Modal />}
+    </UserProvider>
   );
 }
 
@@ -74,7 +79,6 @@ export async function getServerSideProps(ctx: NextPageContext) {
 
     return {
       props: {
-        user: JSON.parse(user),
         benefits: data.data.data,
       },
     };
