@@ -1,14 +1,23 @@
 import Image from 'next/image';
 
 import styles from '../styles/Beneficios.module.css';
+import { Benefit } from '../types';
 
-export default function Card() {
+export default function Card({
+  image,
+  title,
+  description,
+  discount,
+  rules,
+  isOnline,
+  url,
+}: Benefit) {
   return (
     <div className={styles.benefitCard}>
       <div className={styles.cardImageWrapper}>
         <Image
           className={styles.cardImage}
-          src="https://urbis-data-drive-api.s3.amazonaws.com/incentives/f075adda-8263-4f30-8710-f50d1324159e.png"
+          src={image}
           alt="Profile picture"
           width="100%"
           height="100%"
@@ -17,17 +26,22 @@ export default function Card() {
       </div>
       <div className={styles.cardInfo}>
         <h3 className={styles.cardTitle}>
-          Academia Bem Estar <span className={styles.badge}>R$ 500,00</span>
+          {title} <span className={styles.badge}>{discount}</span>
         </h3>
-        <small>DESCONTO NA ACADEMIA</small>
-        <p className={styles.cardParagraph}>
-          {`10% de Desconto em suas mensalidades!\r\n\r\nApresente seu
-                virtual, juntamente com documento com foto e solicite o
-                desconto. \r\n\r\nAPROVEITE!`}
-        </p>
-        <a href="#" className={styles.claimButton}>
-          Resgatar
-        </a>
+        <small>{description}</small>
+        <p className={styles.cardParagraph}>{rules}</p>
+        {isOnline ? (
+          <a
+            href={url!}
+            target="_blank"
+            rel="noreferrer noopener"
+            className={styles.claimButton}
+          >
+            Resgatar
+          </a>
+        ) : (
+          <a className={styles.expiredButton}>Expirado</a>
+        )}
       </div>
     </div>
   );
