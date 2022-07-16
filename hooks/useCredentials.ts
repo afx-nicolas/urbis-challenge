@@ -1,9 +1,5 @@
 import { useReducer } from 'react';
-
-interface Credentials {
-  email: string;
-  password: string;
-}
+import { Credentials } from '../types';
 
 const initialValue: Credentials = {
   email: '',
