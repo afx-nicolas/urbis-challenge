@@ -69,3 +69,35 @@ export function Search() {
     </svg>
   );
 }
+
+interface SpinnerProps {
+  color: string;
+  size: number;
+}
+
+export function Spinner({ color, size }: SpinnerProps) {
+  return (
+    <svg
+      className="spin-animation"
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill="none"
+      viewBox="0 0 16 16"
+    >
+      <path
+        fill={color}
+        fillOpacity="0.25"
+        fillRule="evenodd"
+        d="M8 14A6 6 0 108 2a6 6 0 000 12zm0 2A8 8 0 108 0a8 8 0 000 16z"
+        clipRule="evenodd"
+      ></path>
+      <path
+        fill={color}
+        fillRule="evenodd"
+        d="M8 1c0 .552-.45.992-.995 1.083a6 6 0 106.912 6.912C14.008 8.451 14.447 8 15 8c.552 0 1.006.45.938.997A8 8 0 117.003.062C7.55-.006 8 .448 8 1z"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  );
+}
