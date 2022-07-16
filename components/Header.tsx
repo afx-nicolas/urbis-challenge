@@ -5,7 +5,12 @@ import {
   Search,
 } from '../components/Icons';
 
-export default function Header() {
+interface HeaderProps {
+  name: string;
+  email?: string;
+}
+
+export default function Header({ name, email }: HeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
@@ -25,7 +30,7 @@ export default function Header() {
           </div>
         </div>
         <div className={styles.profile}>
-          <span>Olá, Fulano!</span>
+          <span>Olá {name}!</span>
           <div className={styles.profileButtonsWrapper}>
             <button className={styles.profileButton}>
               <NotificationImportant />
