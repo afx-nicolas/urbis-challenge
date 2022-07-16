@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { setCookie } from 'nookies';
 
 import { api } from '../../services/api';
 
@@ -12,6 +11,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  if (req.method !== 'POST') {
+    res.status(405).send('Method not allowed.');
+  }
+
   const { email, password }: RequestBody = req.body;
 
   try {
