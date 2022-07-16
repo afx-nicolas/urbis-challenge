@@ -1,6 +1,7 @@
 import type { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
 import { useState } from 'react';
+import { Spinner } from '../components/Icons';
 
 import useCredentials from '../hooks/useCredentials';
 import { auth } from '../lib/auth';
@@ -12,6 +13,7 @@ const emailRegex = /^[A-z0-9.\-_]+@[A-z0-9.\-_]+\.[A-z]{2,4}(\.[A-z]{2,4})?$/;
 const Home: NextPage = () => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isValidCredentials, setIsValidCredentials] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { credentials, dispatch } = useCredentials();
 
   function handleEmailInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -25,16 +27,21 @@ const Home: NextPage = () => {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const { email, password } = credentials;
+    const { email } = credentials;
 
     if (!emailRegex.exec(email)) {
       return setIsEmailValid(false);
     }
 
+    if (isLoading) return;
+
+    setIsLoading(true);
+
     const isAuthenticated = await auth(credentials);
 
     if (!isAuthenticated) {
       dispatch({ type: 'clearPassword' });
+      setIsLoading(false);
       return setIsValidCredentials(false);
     }
   }
@@ -78,7 +85,7 @@ const Home: NextPage = () => {
             />
           </div>
           <button className={styles.submitButton} type="submit">
-            Entrar
+            {isLoading && <Spinner color="#fff" size={14} />} Entrar
           </button>
         </form>
       </main>
