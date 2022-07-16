@@ -1,0 +1,81 @@
+.modalOverlay {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000050;
+  padding: 0 1.25rem;
+}
+
+.modalContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: min(100%, 600px);
+  background-color: #f8f8f8;
+  border-radius: 1rem;
+  padding: 2.5rem;
+  box-shadow: 10px 10px 10px 3px rgba(0, 0, 0, 0.25);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.description {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.icon {
+  width: 4rem;
+}
+
+.verticalForm {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin: 1.5rem 0;
+  gap: 0.5rem;
+}
+
+.radioLabel {
+  width: 100%;
+  border: 2px solid #c4c4c4;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+  padding: 0.75rem 0;
+}
+
+.radio:checked + .radioLabel {
+  background-color: #ffa1004d;
+  border-color: transparent;
+  font-weight: bold;
+}
+
+.srOnly {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.buttonGroup {
+  width: 100%;
+  display: flex;
+  gap: 1.25rem;
+}
+
+@media screen and (max-width: 425px) {
+  .modalContainer {
+    padding: 1.25rem;
+  }
+}
