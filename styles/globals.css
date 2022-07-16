@@ -22,3 +22,20 @@ a {
   margin: 0;
   box-sizing: border-box;
 }
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-animation {
+  animation-name: spin;
+  animation-timing-function: linear;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
