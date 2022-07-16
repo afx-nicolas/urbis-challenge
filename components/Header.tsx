@@ -1,16 +1,16 @@
+import { useContext } from 'react';
+
 import styles from '../styles/Beneficios.module.css';
 import {
   AccountCircle,
   NotificationImportant,
   Search,
 } from '../components/Icons';
+import { UserContext } from '../contexts/UserContext';
 
-interface HeaderProps {
-  name: string;
-  email?: string;
-}
+export default function Header() {
+  const { name } = useContext(UserContext);
 
-export default function Header({ name, email }: HeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
