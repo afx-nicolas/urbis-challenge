@@ -3,6 +3,10 @@ import Image from 'next/image';
 import styles from '../styles/Beneficios.module.css';
 import { Benefit } from '../types';
 
+interface CardProps extends Benefit {
+  handleModalOpen: () => void;
+}
+
 export default function Card({
   image,
   title,
@@ -11,7 +15,8 @@ export default function Card({
   rules,
   isOnline,
   url,
-}: Benefit) {
+  handleModalOpen,
+}: CardProps) {
   return (
     <div className={styles.benefitCard}>
       <div className={styles.cardImageWrapper}>
@@ -36,6 +41,7 @@ export default function Card({
             target="_blank"
             rel="noreferrer noopener"
             className={styles.claimButton}
+            onClick={handleModalOpen}
           >
             Resgatar
           </a>
