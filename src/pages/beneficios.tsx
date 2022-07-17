@@ -37,7 +37,7 @@ export default function Beneficios({
 
   return (
     <UserProvider>
-      <PageHead title="Benefícios">
+      <PageHead title="Benefícios | Clube Staging">
         <Header />
         <main className={styles.main}>
           <div className={styles.container}>

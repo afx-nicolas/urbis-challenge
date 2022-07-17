@@ -48,7 +48,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <PageHead title="Login">
+    <PageHead title="Login | Clube Staging">
       <div className={styles.container}>
         <main className={styles.main}>
           <h1 className={styles.title}>Clube de vantagens Staging</h1>
