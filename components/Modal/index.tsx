@@ -28,6 +28,14 @@ export default function Modal({ closeModal }: ModalProps) {
   }
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
+  useEffect(() => {
     if (answerLater) {
       closeModal();
     }
