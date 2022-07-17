@@ -1,17 +1,42 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
+
+import { BenefitFeedback } from '../../types';
 
 import styles from './Modal.module.css';
+
 import { Gift } from '../Icons';
 import Button from '../Button';
 import { UserContext } from '../../contexts/UserContext';
 
 interface ClaimBenefitStepProps {
   date: string;
+  goToStep: (step: number) => void;
+  handleFeedbackChange: (feedback: BenefitFeedback) => void;
+  answerLater: () => void;
 }
 
-export default function ClaimBenefitStep({ date }: ClaimBenefitStepProps) {
+export default function ClaimBenefitStep({
+  date,
+  goToStep,
+  handleFeedbackChange,
+  answerLater,
+}: ClaimBenefitStepProps) {
   const [isBenefitUsed, setIsBenefitUsed] = useState<boolean | null>(null);
   const { name } = useContext(UserContext);
+
+  function handleBenefitIsUsedChange(event: React.FormEvent<HTMLFormElement>) {
+    setIsBenefitUsed(!!+(event.target as HTMLInputElement).value);
+  }
+
+  function handleSubmit() {
+    if (isBenefitUsed) {
+      handleFeedbackChange({ hasUsedBenefit: true });
+      goToStep(2);
+      return;
+    }
+
+    handleFeedbackChange({ hasUsedBenefit: false });
+  }
 
   return (
     <>
@@ -22,13 +47,16 @@ export default function ClaimBenefitStep({ date }: ClaimBenefitStepProps) {
         Identificamos que você acessou o site do Parceiro Tal no dia {date}.
         Você pode nos dizer se utilizou um benefício na ocasião?
       </p>
-      <form className={styles.verticalForm}>
+      <form
+        onChange={handleBenefitIsUsedChange}
+        className={styles.verticalForm}
+      >
         <input
           className={[styles.srOnly, styles.radio].join(' ')}
           type="radio"
           id="yes-used-benefit"
           name="used-benefit"
-          onChange={() => setIsBenefitUsed(true)}
+          value={1}
         />
         <label className={styles.radioLabel} htmlFor="yes-used-benefit">
           Sim. Eu utilizei um benefício
@@ -38,15 +66,21 @@ export default function ClaimBenefitStep({ date }: ClaimBenefitStepProps) {
           type="radio"
           id="no-used-benefit"
           name="used-benefit"
-          onChange={() => setIsBenefitUsed(false)}
+          value={0}
         />
         <label className={styles.radioLabel} htmlFor="no-used-benefit">
           Não. Eu não utilizei um benefício
         </label>
       </form>
       <div className={styles.buttonGroup}>
-        <Button variant="secondary">Responder depois</Button>
-        <Button variant="primary" disabled={isBenefitUsed === null}>
+        <Button onClick={answerLater} variant="secondary">
+          Responder depois
+        </Button>
+        <Button
+          onClick={handleSubmit}
+          variant="primary"
+          disabled={isBenefitUsed === null}
+        >
           {isBenefitUsed ? 'Próximo' : 'Salvar resposta'}
         </Button>
       </div>
