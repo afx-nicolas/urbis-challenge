@@ -8,7 +8,6 @@ interface PaginationProps {
 
 export default function Pagination({ page, maxPages }: PaginationProps) {
   const remainingPages = maxPages - page;
-  console.log(remainingPages);
 
   return (
     <div className={styles.wrapper}>
