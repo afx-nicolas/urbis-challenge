@@ -46,8 +46,8 @@ export default function ClaimBenefitStep({
       <span className={styles.title}>Oba!</span>
       <span className={styles.title}>{name}, você usou um benefício?</span>
       <p className={styles.description}>
-        Identificamos que você acessou o site do Parceiro Tal no dia {date}.
-        Você pode nos dizer se utilizou um benefício na ocasião?
+        Identificamos que você acessou o site de um parceiro no dia {date}. Você
+        pode nos dizer se utilizou um benefício na ocasião?
       </p>
       <form
         onChange={handleBenefitIsUsedChange}
