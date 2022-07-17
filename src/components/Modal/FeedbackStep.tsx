@@ -109,10 +109,21 @@ export default function FeedbackStep({
         onChange={handleCommentaryChange}
       ></textarea>
       <div className={styles.buttonGroup}>
-        <Button onClick={() => goToStep(1)} variant="secondary">
+        <Button
+          isLink={false}
+          className={styles.button}
+          onClick={() => goToStep(1)}
+          variant="secondary"
+        >
           Voltar
         </Button>
-        <Button onClick={handleSubmit} variant="primary" disabled={!rating}>
+        <Button
+          isLink={false}
+          className={styles.button}
+          onClick={handleSubmit}
+          variant="primary"
+          disabled={!rating}
+        >
           Próximo
         </Button>
       </div>

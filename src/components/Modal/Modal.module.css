@@ -109,6 +109,10 @@
   margin-bottom: 1.5rem;
 }
 
+.button {
+  width: 100%;
+}
+
 .buttonGroup {
   width: 100%;
   display: flex;

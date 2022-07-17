@@ -75,10 +75,17 @@ export default function ClaimBenefitStep({
         </label>
       </form>
       <div className={styles.buttonGroup}>
-        <Button onClick={answerLater} variant="secondary">
+        <Button
+          isLink={false}
+          className={styles.button}
+          onClick={answerLater}
+          variant="secondary"
+        >
           Responder depois
         </Button>
         <Button
+          isLink={false}
+          className={styles.button}
           onClick={handleSubmit}
           variant="primary"
           disabled={isBenefitUsed === null}

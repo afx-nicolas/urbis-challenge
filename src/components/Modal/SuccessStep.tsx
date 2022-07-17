@@ -20,7 +20,12 @@ export default function SuccessStep({ submitFeedback }: SuccessStepProps) {
         melhor.
       </p>
       <div className={styles.buttonContainer}>
-        <Button onClick={submitFeedback} variant="primary">
+        <Button
+          isLink={false}
+          className={styles.button}
+          onClick={submitFeedback}
+          variant="primary"
+        >
           Fechar
         </Button>
       </div>
