@@ -50,10 +50,27 @@
 }
 
 .notificationButton {
+  position: relative;
   border: 0;
   outline: 0;
   background-color: transparent;
   cursor: pointer;
+}
+
+.notificationCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 0.75rem;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  background-color: #ff4f4f;
+  border-radius: 50%;
+  top: 100%;
+  left: 75%;
+  color: #fff;
 }
 
 @media screen and (max-width: 1024px) {
@@ -66,6 +83,10 @@
   .logo {
     grid-row: 1;
     margin: 0;
+  }
+
+  .profileButton {
+    position: static;
   }
 
   .profile {
