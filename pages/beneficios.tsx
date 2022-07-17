@@ -10,13 +10,23 @@ import Card from '../components/Card';
 import Header from '../components/Header';
 import styles from '../styles/Beneficios.module.css';
 import Modal from '../components/Modal';
+import Pagination from '../components/Pagination';
 
 interface BeneficiosProps {
   benefits: Benefit[];
+  page: number;
+  maxPages: number;
 }
 
-export default function Beneficios({ benefits }: BeneficiosProps) {
+export default function Beneficios({
+  benefits,
+  page,
+  maxPages,
+}: BeneficiosProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  console.log('page:', page);
+  console.log('maxPages:', maxPages);
 
   const handleModalOpen = () => setIsModalOpen(true);
 
@@ -45,6 +55,7 @@ export default function Beneficios({ benefits }: BeneficiosProps) {
           ))}
         </div>
       </main>
+      <Pagination page={page} maxPages={maxPages} />
       {isModalOpen && <Modal closeModal={handleModalClose} />}
     </UserProvider>
   );
@@ -77,13 +88,16 @@ export async function getServerSideProps(ctx: NextPageContext) {
   }
 
   try {
+    const itemsPerPage = 10;
     const { data } = await api.post(
-      `/incentive/search?page=${page || 1}&qtd=10&paginable=true`
+      `/incentive/search?page=${page || 1}&qtd=${itemsPerPage}&paginable=true`
     );
 
     return {
       props: {
         benefits: data.data.data,
+        page: page || 1,
+        maxPages: Math.ceil(data.data.totalCount / itemsPerPage),
       },
     };
   } catch {
