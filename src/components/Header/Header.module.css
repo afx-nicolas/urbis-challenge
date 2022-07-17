@@ -22,35 +22,6 @@
   margin-right: 2rem;
 }
 
-.searchContainer {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  grid-column: 2 / 4;
-  grid-row: 1;
-}
-
-.searchBarWrapper {
-  width: min(100%, 600px);
-  position: relative;
-}
-
-.searchBar {
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 1rem 3rem 1rem 1rem;
-}
-
-.searchIconWrapper {
-  position: absolute;
-  top: 50%;
-  right: 1rem;
-  transform: translateY(-50%);
-}
-
 .profile {
   display: flex;
   gap: 1.125rem;
@@ -88,12 +59,6 @@
   .logo {
     grid-row: 1;
     margin: 0;
-  }
-
-  .searchContainer {
-    flex-direction: column;
-    grid-column: 1 / 5;
-    grid-row: 2;
   }
 
   .profile {
