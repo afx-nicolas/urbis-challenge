@@ -13,3 +13,9 @@ export interface Benefit {
   isOnline: boolean;
   url: string | null;
 }
+
+export interface BenefitFeedback {
+  hasUsedBenefit?: boolean;
+  rating?: 1 | 2 | 3 | 4 | 5;
+  feedback?: string;
+}
