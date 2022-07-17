@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { NextPageContext } from 'next';
 import { destroyCookie, parseCookies } from 'nookies';
 
@@ -24,10 +24,14 @@ export default function Beneficios({
   page,
   maxPages,
 }: BeneficiosProps) {
+  const [notifications, setNotifications] = useState<string[]>([]);
+  const [notificationForId, setNotificationForId] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log('page:', page);
-  console.log('maxPages:', maxPages);
+  const handleNewNotification = (id: string) => {
+    if (notifications.includes(id)) return;
+    setNotifications((state) => [...state, id]);
+  };
 
   const handleModalOpen = () => setIsModalOpen(true);
 
@@ -35,10 +39,21 @@ export default function Beneficios({
     setIsModalOpen(false);
   };
 
+  const handleNotificationRemove = () => {
+    setNotifications((state) =>
+      state.filter((notification) => notification !== notificationForId)
+    );
+    setNotificationForId('');
+  };
+
   return (
     <UserProvider>
       <PageHead title="Benefícios | Clube Staging">
-        <Header />
+        <Header
+          notifications={notifications}
+          handleModalOpen={handleModalOpen}
+          setNotificationForId={setNotificationForId}
+        />
         <main className={styles.main}>
           <div className={styles.container}>
             {benefits.map((benefit) => (
@@ -52,13 +67,20 @@ export default function Beneficios({
                 rules={benefit.rules}
                 isOnline={benefit.isOnline}
                 url={benefit.url}
+                handleNewNotification={handleNewNotification}
                 handleModalOpen={handleModalOpen}
               />
             ))}
           </div>
         </main>
         <Pagination page={page} maxPages={maxPages} />
-        {isModalOpen && <Modal closeModal={handleModalClose} />}
+        {isModalOpen && (
+          <Modal
+            closeModal={handleModalClose}
+            notification={notificationForId}
+            removeNotification={handleNotificationRemove}
+          />
+        )}
       </PageHead>
     </UserProvider>
   );
