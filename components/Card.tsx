@@ -20,13 +20,13 @@ export default function Card({
   return (
     <div className={styles.benefitCard}>
       <div className={styles.cardImageWrapper}>
-        <Image
+        {/* eslint-disable-next-line */}
+        <img
           className={styles.cardImage}
           src={image}
-          alt="Profile picture"
+          alt={title}
           width="100%"
           height="100%"
-          layout="responsive"
         />
       </div>
       <div className={styles.cardInfo}>
