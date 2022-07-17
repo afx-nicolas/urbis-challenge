@@ -15,12 +15,38 @@
 }
 
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   border-bottom: 1px solid var(--border);
-  font-size: 1.25rem;
-  font-weight: bold;
   padding-bottom: 0.25rem;
   margin: 0 auto 0.75rem;
+}
+
+.headerTitle {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--blue);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.close:hover {
+  background-color: var(--blue-hover);
 }
 
 .notification {
