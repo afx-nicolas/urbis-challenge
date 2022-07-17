@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import styles from './Header.module.css';
 import { AccountCircle, NotificationImportant } from '../../components/Icons';
@@ -8,6 +8,7 @@ import Notifications from '../Notifications';
 
 export default function Header() {
   const { name } = useContext(UserContext);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
   return (
     <header className={styles.header}>
@@ -18,10 +19,14 @@ export default function Header() {
           <span>Olá {name}!</span>
           <div className={styles.profileButtonsWrapper}>
             <div className={styles.profileButton}>
-              <button className={styles.notificationButton}>
+              <button
+                onBlur={() => setIsNotificationsOpen(false)}
+                onClick={() => setIsNotificationsOpen((state) => !state)}
+                className={styles.notificationButton}
+              >
                 <NotificationImportant />
               </button>
-              <Notifications />
+              {isNotificationsOpen && <Notifications />}
             </div>
             <a href="#" className={styles.profileButton}>
               <AccountCircle />
