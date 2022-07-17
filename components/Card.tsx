@@ -27,6 +27,7 @@ export default function Card({
           alt={title}
           width="100%"
           height="100%"
+          loading="lazy"
         />
       </div>
       <div className={styles.cardInfo}>
