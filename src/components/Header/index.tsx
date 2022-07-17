@@ -6,9 +6,21 @@ import { UserContext } from '../../contexts/UserContext';
 import SearchBar from '../SearchBar';
 import Notifications from '../Notifications';
 
-export default function Header() {
+interface HeaderProps {
+  notifications: string[];
+  handleModalOpen: () => void;
+  setNotificationForId: (id: string) => void;
+}
+
+export default function Header({
+  notifications,
+  handleModalOpen,
+  setNotificationForId,
+}: HeaderProps) {
   const { name } = useContext(UserContext);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+
+  const closeNotifications = () => setIsNotificationsOpen(false);
 
   return (
     <header className={styles.header}>
@@ -20,13 +32,24 @@ export default function Header() {
           <div className={styles.profileButtonsWrapper}>
             <div className={styles.profileButton}>
               <button
-                onBlur={() => setIsNotificationsOpen(false)}
                 onClick={() => setIsNotificationsOpen((state) => !state)}
                 className={styles.notificationButton}
               >
                 <NotificationImportant />
+                {notifications.length > 0 && (
+                  <span className={styles.notificationCount}>
+                    {notifications.length > 99 ? '99+' : notifications.length}
+                  </span>
+                )}
               </button>
-              {isNotificationsOpen && <Notifications />}
+              {isNotificationsOpen && (
+                <Notifications
+                  notifications={notifications}
+                  handleModalOpen={handleModalOpen}
+                  setNotificationForId={setNotificationForId}
+                  closeNotifications={closeNotifications}
+                />
+              )}
             </div>
             <a href="#" className={styles.profileButton}>
               <AccountCircle />
