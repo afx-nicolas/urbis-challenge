@@ -1,5 +1,6 @@
 import styles from './Card.module.css';
 import { Benefit } from '../../types';
+import Button from '../Button';
 
 interface CardProps extends Benefit {
   handleModalOpen: () => void;
@@ -35,17 +36,24 @@ export default function Card({
         <small>{description}</small>
         <p className={styles.cardParagraph}>{rules}</p>
         {isOnline ? (
-          <a
+          <Button
+            className={styles.claimButton}
             href={url!}
             target="_blank"
-            rel="noreferrer noopener"
-            className={styles.claimButton}
+            isLink={true}
+            variant="primary"
             onClick={handleModalOpen}
           >
             Resgatar
-          </a>
+          </Button>
         ) : (
-          <a className={styles.expiredButton}>Expirado</a>
+          <Button
+            className={styles.expiredButton}
+            isLink={false}
+            variant={'disabled'}
+          >
+            Expirado
+          </Button>
         )}
       </div>
     </div>
