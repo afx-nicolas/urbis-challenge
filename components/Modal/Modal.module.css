@@ -5,13 +5,13 @@
   align-items: center;
   justify-content: center;
   background-color: #00000050;
-  padding: 0 1.25rem;
+  padding: 1.25rem;
 }
 
 .modalContainer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   flex-direction: column;
   width: min(100%, 600px);
   background-color: #f8f8f8;
@@ -104,7 +104,7 @@
   outline: none;
   padding: 0.75rem;
   width: 100%;
-  height: 100px;
+  min-height: 100px;
   resize: none;
   margin-bottom: 1.5rem;
 }
@@ -118,6 +118,25 @@
 .buttonContainer {
   width: min(100%, 250px);
   margin-top: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .modalContainer {
+    max-height: 100%;
+    overflow-y: auto;
+  }
+
+  .form {
+    flex-direction: column;
+  }
+
+  .form .radioLabel:first-of-type {
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+
+  .form .radioLabel:last-of-type {
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
 }
 
 @media screen and (max-width: 425px) {
