@@ -9,7 +9,7 @@ export default function PageHead({ title, children }: PageHeadProps) {
   return (
     <>
       <Head>
-        <title>{title} | Clube Staging</title>
+        <title>{title}</title>
         <meta
           name="description"
           content="Aproveite todos os benefícios do clube de vantagens Staging"
