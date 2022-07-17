@@ -21,7 +21,12 @@ export default function Notifications({
 
   return (
     <div className={styles.container}>
-      <span className={styles.header}>Notificações</span>
+      <div className={styles.header}>
+        <span className={styles.headerTitle}>Notificações</span>
+        <button onClick={closeNotifications} className={styles.close}>
+          x
+        </button>
+      </div>
       <div className={styles.notificationsWrapper}>
         {notifications.map((notification) => (
           <div key={notification} className={styles.notification}>
