@@ -4,9 +4,11 @@ import Button from '../Button';
 
 interface CardProps extends Benefit {
   handleModalOpen: () => void;
+  handleNewNotification: (id: string) => void;
 }
 
 export default function Card({
+  id,
   image,
   title,
   description,
@@ -14,8 +16,10 @@ export default function Card({
   rules,
   isOnline,
   url,
-  handleModalOpen,
+  handleNewNotification,
 }: CardProps) {
+  const fireNewNotification = () => handleNewNotification(id);
+
   return (
     <div className={styles.benefitCard}>
       <div className={styles.cardImageWrapper}>
@@ -42,7 +46,7 @@ export default function Card({
             target="_blank"
             isLink={true}
             variant="primary"
-            onClick={handleModalOpen}
+            onClick={fireNewNotification}
           >
             Resgatar
           </Button>
