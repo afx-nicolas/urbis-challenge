@@ -10,9 +10,15 @@ import SuccessStep from './SuccessStep';
 
 interface ModalProps {
   closeModal: () => void;
+  notification: string;
+  removeNotification: () => void;
 }
 
-export default function Modal({ closeModal }: ModalProps) {
+export default function Modal({
+  closeModal,
+  notification,
+  removeNotification,
+}: ModalProps) {
   const [feedback, setFeedback] = useState({} as BenefitFeedback);
   const [answerLater, setAnswerLater] = useState(false);
   const [step, setStep] = useState(1);
@@ -23,7 +29,7 @@ export default function Modal({ closeModal }: ModalProps) {
   }
 
   function submitFeedback() {
-    console.log(feedback);
+    removeNotification();
     closeModal();
   }
 
@@ -43,9 +49,10 @@ export default function Modal({ closeModal }: ModalProps) {
 
   useEffect(() => {
     if (feedback.hasUsedBenefit === false) {
+      removeNotification();
       closeModal();
     }
-  }, [feedback, closeModal]);
+  }, [feedback, closeModal, removeNotification]);
 
   function handleDisplayStep() {
     switch (step) {
