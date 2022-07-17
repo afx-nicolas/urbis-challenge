@@ -20,6 +20,10 @@ export default function Beneficios({ benefits }: BeneficiosProps) {
 
   const handleModalOpen = () => setIsModalOpen(true);
 
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <UserProvider>
       <Header />
@@ -41,7 +45,7 @@ export default function Beneficios({ benefits }: BeneficiosProps) {
           ))}
         </div>
       </main>
-      {isModalOpen && <Modal />}
+      {isModalOpen && <Modal closeModal={handleModalClose} />}
     </UserProvider>
   );
 }
