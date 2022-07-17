@@ -36,7 +36,9 @@ export default function FeedbackStep({
 
   return (
     <>
-      <Label />
+      <div>
+        <Label />
+      </div>
       <span className={styles.title}>
         Que bom que você aproveitou este benefício!
       </span>

@@ -40,7 +40,9 @@ export default function ClaimBenefitStep({
 
   return (
     <>
-      <Gift />
+      <div>
+        <Gift />
+      </div>
       <span className={styles.title}>Oba!</span>
       <span className={styles.title}>{name}, você usou um benefício?</span>
       <p className={styles.description}>

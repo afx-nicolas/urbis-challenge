@@ -10,7 +10,9 @@ interface SuccessStepProps {
 export default function SuccessStep({ submitFeedback }: SuccessStepProps) {
   return (
     <>
-      <Insignia />
+      <div>
+        <Insignia />
+      </div>
       <span className={styles.title}>Sucesso!</span>
       <p className={styles.description}>
         Sua resposta foi registrada com sucesso. Agradecemos muito por você ter
