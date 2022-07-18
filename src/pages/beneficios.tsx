@@ -28,29 +28,29 @@ export default function Beneficios({
   page,
   maxPages,
 }: BeneficiosProps) {
+  const [getFromLocalStorage, setGetFromLocalStorage] = useState(false);
   const [notifications, setNotifications] = useState<string[]>([]);
   const [notificationForId, setNotificationForId] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (window !== undefined) {
-      const notificationsFromStorage =
-        window.localStorage.getItem('notifications');
+      if (!getFromLocalStorage) {
+        const notificationsFromStorage =
+          window.localStorage.getItem('notifications');
 
-      if (notificationsFromStorage) {
-        setNotifications(JSON.parse(notificationsFromStorage));
+        if (notificationsFromStorage) {
+          setNotifications(JSON.parse(notificationsFromStorage));
+        }
+        return setGetFromLocalStorage(true);
       }
-    }
-  }, []);
 
-  useEffect(() => {
-    if (window !== undefined && notifications.length > 0) {
       window.localStorage.setItem(
         'notifications',
         JSON.stringify(notifications)
       );
     }
-  }, [notifications]);
+  }, [notifications, getFromLocalStorage]);
 
   const handleNewNotification = (id: string) => {
     if (notifications.includes(id)) return;
