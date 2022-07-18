@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
 import { destroyCookie, parseCookies } from 'nookies';
 
@@ -27,6 +27,26 @@ export default function Beneficios({
   const [notifications, setNotifications] = useState<string[]>([]);
   const [notificationForId, setNotificationForId] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (window !== undefined) {
+      const notificationsFromStorage =
+        window.localStorage.getItem('notifications');
+
+      if (notificationsFromStorage) {
+        setNotifications(JSON.parse(notificationsFromStorage));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (window !== undefined && notifications.length > 0) {
+      window.localStorage.setItem(
+        'notifications',
+        JSON.stringify(notifications)
+      );
+    }
+  }, [notifications]);
 
   const handleNewNotification = (id: string) => {
     if (notifications.includes(id)) return;
