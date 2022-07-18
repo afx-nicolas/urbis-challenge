@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
+import Link from 'next/link';
 import { destroyCookie, parseCookies } from 'nookies';
 
 import { api } from '../services/api';
@@ -12,14 +13,17 @@ import Header from '../components/Header';
 import styles from '../styles/Beneficios.module.css';
 import Modal from '../components/Modal';
 import Pagination from '../components/Pagination';
+import Button from '../components/Button';
 
 interface BeneficiosProps {
+  isSearch: boolean;
   benefits: Benefit[];
   page: number;
   maxPages: number;
 }
 
 export default function Beneficios({
+  isSearch,
   benefits,
   page,
   maxPages,
@@ -76,24 +80,39 @@ export default function Beneficios({
         />
         <main className={styles.main}>
           <div className={styles.container}>
-            {benefits.map((benefit) => (
-              <Card
-                key={benefit.id}
-                id={benefit.id}
-                image={benefit.image}
-                title={benefit.title}
-                description={benefit.description}
-                discount={benefit.discount}
-                rules={benefit.rules}
-                isOnline={benefit.isOnline}
-                url={benefit.url}
-                handleNewNotification={handleNewNotification}
-                handleModalOpen={handleModalOpen}
-              />
-            ))}
+            {isSearch && (
+              <Link href="/beneficios" passHref>
+                <Button className={styles.goBack} variant="primary" isLink>
+                  Inicio
+                </Button>
+              </Link>
+            )}
+            {benefits.length === 0 ? (
+              <span className={styles.noResults}>
+                Nenhum resultado encontrado.
+              </span>
+            ) : (
+              <>
+                {benefits.map((benefit) => (
+                  <Card
+                    key={benefit.id}
+                    id={benefit.id}
+                    image={benefit.image}
+                    title={benefit.title}
+                    description={benefit.description}
+                    discount={benefit.discount}
+                    rules={benefit.rules}
+                    isOnline={benefit.isOnline}
+                    url={benefit.url}
+                    handleNewNotification={handleNewNotification}
+                    handleModalOpen={handleModalOpen}
+                  />
+                ))}
+              </>
+            )}
           </div>
         </main>
-        <Pagination page={page} maxPages={maxPages} />
+        {maxPages > 1 && <Pagination page={page} maxPages={maxPages} />}
         {isModalOpen && (
           <Modal
             closeModal={handleModalClose}
@@ -109,7 +128,7 @@ export default function Beneficios({
 export async function getServerSideProps(ctx: NextPageContext) {
   const { token } = parseCookies(ctx, 'token');
   const { user } = parseCookies(ctx, 'user');
-  const { page } = ctx.query;
+  const { page, search } = ctx.query;
 
   if (!token || !user) {
     destroyCookie(ctx, 'token');
@@ -132,6 +151,40 @@ export async function getServerSideProps(ctx: NextPageContext) {
     };
   }
 
+  // When user is searching
+  if (search) {
+    try {
+      const { data } = await api.post('/incentive/search?paginable=false');
+      const searchString =
+        typeof search === 'string' ? search : search.join(' ');
+
+      const filteredBenefits = data.data.data.filter((benefit: Benefit) => {
+        return RegExp(searchString.replace(/[^\w\s]/gi, ''), 'i').test(
+          benefit.title
+        );
+      });
+
+      return {
+        props: {
+          isSearch: true,
+          benefits: filteredBenefits,
+          page: 1,
+          maxPages: 1,
+        },
+      };
+    } catch {
+      destroyCookie(ctx, 'token');
+      destroyCookie(ctx, 'user');
+
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      };
+    }
+  }
+
   try {
     const itemsPerPage = 10;
     const { data } = await api.post(
@@ -140,6 +193,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
 
     return {
       props: {
+        isSearch: false,
         benefits: data.data.data,
         page: page || 1,
         maxPages: Math.ceil(data.data.totalCount / itemsPerPage),
