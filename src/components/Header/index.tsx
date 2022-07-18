@@ -1,10 +1,14 @@
 import { useContext, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 import styles from './Header.module.css';
 import { AccountCircle, NotificationImportant } from '../../components/Icons';
 import { UserContext } from '../../contexts/UserContext';
 import SearchBar from '../SearchBar';
 import Notifications from '../Notifications';
+
+import Logo from '/public/logo.png';
 
 interface HeaderProps {
   notifications: string[];
@@ -25,7 +29,17 @@ export default function Header({
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
-        <span className={styles.logo}>Logo</span>
+        <div className={styles.logoContainer}>
+          <Link href="/beneficios" passHref>
+            <a className={styles.logoLink}>
+              <Image
+                className={styles.logo}
+                src={Logo}
+                alt="Logo Clube Staging"
+              />
+            </a>
+          </Link>
+        </div>
         <SearchBar />
         <div className={styles.profile}>
           <span>Olá {name}!</span>
