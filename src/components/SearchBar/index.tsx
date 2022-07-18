@@ -1,7 +1,23 @@
+import React, { useState } from 'react';
+
 import styles from './SearchBar.module.css';
 import { Search } from '../Icons';
 
 export default function SearchBar() {
+  const [search, setSearch] = useState('');
+
+  function handleSearchByInput(e: React.KeyboardEvent) {
+    if (e.key === 'Enter' && search.length > 1) {
+      window.location.href = '/beneficios?search=' + encodeURIComponent(search);
+    }
+  }
+
+  function handleSearchByClick() {
+    if (search.length > 1) {
+      window.location.href = '/beneficios?search=' + encodeURIComponent(search);
+    }
+  }
+
   return (
     <div className={styles.searchContainer}>
       <div className={styles.searchBarWrapper}>
@@ -11,9 +27,14 @@ export default function SearchBar() {
           name="search"
           id="search"
           placeholder="Buscar"
-          onKeyDown={(e) => console.log(e)}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={handleSearchByInput}
         />
-        <button className={styles.searchIconWrapper}>
+        <button
+          onClick={handleSearchByClick}
+          className={styles.searchIconWrapper}
+        >
           <Search />
         </button>
       </div>
