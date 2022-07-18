@@ -11,3 +11,14 @@
   width: min(100%, 1200px);
   gap: 1rem;
 }
+
+.noResults {
+  font-size: 2rem;
+  text-align: center;
+  margin: 0.5rem auto 0;
+}
+
+.goBack {
+  width: min(100%, 400px);
+  margin: 0 auto;
+}
